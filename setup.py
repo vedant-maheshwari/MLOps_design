@@ -23,20 +23,29 @@ AUTHOR_EMAIL = 'vedantmaheshwari23@gmail.com'
 REQUIREMENTS_FILE_NAME = 'requirments.txt'
 HYPHEN_E_DOT = '-e .'
 
-def get_requirements_list() -> list[str]:
+# def get_requirements_list() -> list[str]:
+#     with open(REQUIREMENTS_FILE_NAME) as requirement_file:
+#         requirement_list = requirement_file.readline()
+
+#         #by default '/n' chracter is there when moving to new line, can create problem in installing dependences 
+#         #hence removing it and adding the requirements in list
+#         requirement_list = [requirement.replace('/n','') for requirement in requirement_list]
+
+#         #Install this project as an editable package
+#         #removes '-e .' so that multiple time the files won't be created if the setup is executed multiple times
+#         if HYPHEN_E_DOT in requirement_list:
+#             requirement_list.remove(HYPHEN_E_DOT)
+        
+#     return requirement_list
+
+def get_requirements_list() -> List[str]:
     with open(REQUIREMENTS_FILE_NAME) as requirement_file:
-        requirement_list = requirement_file.readline()
-
-        #by default '/n' chracter is there when moving to new line, can create problem in installing dependences 
-        #hence removing it and adding the requirements in list
-        requirement_list = [requirement.replace('/n','') for requirement in requirement_list]
-
-        #Install this project as an editable package
-        #removes '-e .' so that multiple time the files won't be created if the setup is executed multiple times
+        requirement_list = requirement_file.readlines()
+        requirement_list = [requirement.strip() for requirement in requirement_list]
         if HYPHEN_E_DOT in requirement_list:
             requirement_list.remove(HYPHEN_E_DOT)
-        
     return requirement_list
+
 
 setup(name=PROJECT_NAME,
       version=VERSION,
@@ -44,5 +53,5 @@ setup(name=PROJECT_NAME,
       author=AUTHOR,
       author_email=AUTHOR_EMAIL,
       packages=find_packages(), #find_packages() goes inside src/__init__.py and gets all the packages to install
-      install_requirements = get_requirements_list() #this gets the requirements list to be downloaded
+      install_requires = get_requirements_list() #this gets the requirements list to be downloaded
      )
