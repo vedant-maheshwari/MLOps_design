@@ -4,4 +4,4 @@
 
 2. activate the environment using " source mlops/bin/activate "
 
-3. completed setup file
+3. run setup file 'install -e .'
